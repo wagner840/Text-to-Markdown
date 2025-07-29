@@ -1,2 +1,2 @@
-# Forçar uso do Dockerfile em vez de detecção automática Node.js
-providers = []
+# Usar Dockerfile para build personalizado
+providers = ["dockerfile"]
