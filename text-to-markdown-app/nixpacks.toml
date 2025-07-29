@@ -1,0 +1,2 @@
+# Forçar uso do Dockerfile em vez de detecção automática Node.js
+providers = []
