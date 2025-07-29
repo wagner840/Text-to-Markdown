@@ -1,10 +1,10 @@
 "use client";
 
 import { ReactElement, useState, useCallback, useRef, useMemo } from "react";
+import { Copy, Download, Clipboard } from "lucide-react";
 import { FormatToggle } from "./FormatToggle";
 import { PreviewPane } from "./PreviewPane";
 import { ClientMarkdownConverter } from "@/lib/markdown/client-converter";
-import { Copy, Download, AlertCircle, Clipboard } from "lucide-react";
 import { useToast } from "@/hooks/useToast";
 
 export function TextConverter(): ReactElement {
@@ -12,7 +12,6 @@ export function TextConverter(): ReactElement {
   const [outputMarkdown, setOutputMarkdown] = useState("");
   const [format, setFormat] = useState<"standard" | "gfm">("gfm");
   const [isConverting, setIsConverting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
 
@@ -21,11 +20,14 @@ export function TextConverter(): ReactElement {
 
   const handleConvert = useCallback(async () => {
     if (!inputText.trim()) {
-      setError("Please enter some text to convert");
+      toast({
+        title: "Conversion error",
+        description: "Please enter some text to convert",
+        variant: "destructive",
+      });
       return;
     }
 
-    setError(null);
     setIsConverting(true);
 
     try {
@@ -44,8 +46,7 @@ export function TextConverter(): ReactElement {
       } else {
         throw new Error("Conversion failed");
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+    } catch {
       toast({
         title: "Conversion error",
         description: "Could not convert the text",
@@ -65,7 +66,7 @@ export function TextConverter(): ReactElement {
         title: "Copied!",
         description: "Markdown copied to clipboard",
       });
-    } catch (err) {
+    } catch {
       toast({
         title: "Copy error",
         description: "Could not copy text",
@@ -101,7 +102,7 @@ export function TextConverter(): ReactElement {
         title: "Text pasted!",
         description: "Text pasted from clipboard",
       });
-    } catch (err) {
+    } catch {
       toast({
         title: "Paste error",
         description: "Could not access clipboard",
@@ -140,14 +141,7 @@ export function TextConverter(): ReactElement {
               disabled={isConverting}
             />
 
-            {error && (
-              <div className="absolute bottom-4 left-4 right-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-3 flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
-                <span className="text-sm text-red-600 dark:text-red-400">
-                  {error}
-                </span>
-              </div>
-            )}
+            {/* Removed error message div */}
           </div>
 
           <button

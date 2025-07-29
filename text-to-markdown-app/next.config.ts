@@ -1,13 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone", // ✅ Essencial para Docker deployment
-  turbopack: {
-    // Turbopack configuration for faster builds (moved from experimental.turbo)
-  },
+  output: "export", // ✅ Para gerar arquivos estáticos compatíveis com Nginx
+  trailingSlash: true,
+  skipTrailingSlashRedirect: true,
+  distDir: "dist", // ✅ Gera na pasta dist que o Coolify espera
   images: {
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    unoptimized: true, // ✅ Necessário para export estático
   },
   reactStrictMode: true,
 };
