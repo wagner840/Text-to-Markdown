@@ -1,1 +1,13 @@
-# Nixpacks vai detectar automaticamente o Dockerfile presente no diretório
+# Configuração para servir arquivos estáticos
+[variables]
+NODE_ENV = "production"
+PORT = "80"
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build] 
+cmds = ["npm run build"]
+
+[start]
+cmd = "npx serve dist -l 80"
