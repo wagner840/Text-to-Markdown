@@ -1,2 +1,1 @@
-# Usar Dockerfile para build personalizado
-providers = ["dockerfile"]
+# Nixpacks vai detectar automaticamente o Dockerfile presente no diretório
