@@ -1,14 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export", // ✅ Para gerar arquivos estáticos compatíveis com Nginx
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
-  distDir: "dist", // ✅ Gera na pasta dist que o Coolify espera
-  images: {
-    unoptimized: true, // ✅ Necessário para export estático
-  },
+  output: "standalone", // ✅ Para deploy SSR no Coolify
   reactStrictMode: true,
+  images: {
+    unoptimized: true, // ✅ Recomendado para self-hosting
+  },
+  // Remove configurações de export estático
 };
 
 export default nextConfig;
